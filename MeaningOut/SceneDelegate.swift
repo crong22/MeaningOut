@@ -16,7 +16,55 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+
+        
+    
+
+        let data = UserDefaults.standard.bool(forKey: "isUser")
+        print(data)
+        
+        guard let scene = (scene as? UIWindowScene) else { return }
+
+        window = UIWindow(windowScene: scene)
+        
+        if data {
+            let tabBarController = UITabBarController()
+            
+            tabBarController.tabBar.tintColor = UIColor(red: 0.9373, green: 0.5373, blue: 0.2784, alpha: 1.0)
+            tabBarController.tabBar.unselectedItemTintColor = .gray
+            
+            let searchList = UserDefaults.standard.array(forKey: "searchList")!
+
+            if searchList.count < 1 {
+                let FindViewController = FindViewController()
+                let find = UINavigationController(rootViewController: FindViewController)
+                find.tabBarItem = UITabBarItem(title: "검색", image: UIImage(systemName: "magnifyingglass"), tag: 0)
+                let SettingViewController = SettingViewController()
+                let setting = UINavigationController(rootViewController: SettingViewController)
+                setting.tabBarItem = UITabBarItem(title: "설정", image: UIImage(systemName: "person"), tag: 1)
+                
+                tabBarController.setViewControllers([find, setting], animated: true)
+
+                window?.rootViewController = tabBarController // storyboard에서 entrypoint
+            }else {
+                let FindListViewController = FindListViewController() // FindListViewController
+                let find = UINavigationController(rootViewController: FindListViewController)
+                find.tabBarItem = UITabBarItem(title: "검색", image: UIImage(systemName: "magnifyingglass"), tag: 0)
+                let SettingViewController = SettingViewController()
+                let setting = UINavigationController(rootViewController: SettingViewController)
+                setting.tabBarItem = UITabBarItem(title: "설정", image: UIImage(systemName: "person"), tag: 1)
+                
+                tabBarController.setViewControllers([find, setting], animated: true)
+
+                window?.rootViewController = tabBarController // storyboard에서 entrypoint
+            }
+        }else {
+            print("MainViewController")
+            let rootViewController = UINavigationController(rootViewController: MainViewController())
+            
+            window?.rootViewController = rootViewController // storyboard에서 entrypoint
+        }
+        window?.makeKeyAndVisible()     // show
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
