@@ -38,6 +38,9 @@ class EditViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         
+        // 수정제안 flase
+        nicknameTextField.autocorrectionType = .no
+        nicknameTextField.spellCheckingType = .no
         
         imageButton.addTarget(self, action: #selector(imageButtonClicked), for: .touchUpInside)
         

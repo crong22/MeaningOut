@@ -33,7 +33,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             tabBarController.tabBar.tintColor = UIColor(red: 0.9373, green: 0.5373, blue: 0.2784, alpha: 1.0)
             tabBarController.tabBar.unselectedItemTintColor = .gray
             
-            let searchList = UserDefaults.standard.array(forKey: "searchList")!
+            if searchList == nil {
+                let searchList = [""]
+            }else {
+                let searchList = UserDefaults.standard.array(forKey: "searchList")
+            }
 
             if searchList.count < 1 {
                 let FindViewController = FindViewController()

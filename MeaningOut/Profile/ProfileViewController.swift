@@ -21,6 +21,8 @@ class ProfileViewController: UIViewController{
     
     var imageList = ["profile_0", "profile_1", "profile_2", "profile_3", "profile_4", "profile_5", "profile_6", "profile_7", "profile_8", "profile_9", "profile_10", "profile_11"]
     let randomImage = Int.random(in: 0...11)
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print(#function)
@@ -40,6 +42,8 @@ class ProfileViewController: UIViewController{
         finishButton.addTarget(self, action: #selector(finishButtonClicked), for: .touchUpInside)
         
         UserDefaults.standard.setValue(imageList, forKey: "imageList")
+        let randomimg = imageList[randomImage]
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -107,6 +111,9 @@ class ProfileViewController: UIViewController{
         nicknameTextField.placeholder = "닉네임을 입력해주세요 :)"
         nicknameTextField.font = .systemFont(ofSize: 16, weight: .bold)
         nicknameTextField.textColor = .black
+        // 수정제안 flase
+        nicknameTextField.autocorrectionType = .no
+        nicknameTextField.spellCheckingType = .no
         nicknameTextField.snp.makeConstraints { make in
             make.top.equalTo(imageButton.snp.bottom).offset(30)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(35)
@@ -164,9 +171,20 @@ class ProfileViewController: UIViewController{
             warningLabel.text = "사용할 수 있는 닉네임이에요 :)"
             
             UserDefaults.standard.setValue(nicknameTextField.text!, forKey: "nickName")
-            UserDefaults.standard.setValue(randomImage, forKey: "profileMainImage")
-            var image = UserDefaults.standard.string(forKey: "profileImage")
-            UserDefaults.standard.setValue(image, forKey: "profile")
+            UserDefaults.standard.setValue(imageList[randomImage], forKey: "profileMainImage")
+            let ranimage = UserDefaults.standard.string(forKey: "profileMainImage")
+            let selectedImage = UserDefaults.standard.string(forKey: "profileImage")
+            // 랜덤이미지 그냥 사용할 때
+            print("랜덤이미지 : \(ranimage)")
+            print("바뀐이미지 : \(selectedImage)")
+            if selectedImage == ranimage {
+                UserDefaults.standard.setValue(ranimage, forKey: "profile")
+            }else {
+                UserDefaults.standard.setValue(selectedImage, forKey: "profile") // 바꾼 이미지 사용할 때
+            }
+
+//            var image = UserDefaults.standard.string(forKey: "profileImage")
+//            UserDefaults.standard.setValue(image, forKey: "profile")
             
             print("가입할 떄 입력한 닉네임 : \(UserDefaults.standard.string(forKey: "nickName"))")
             print("가입할 떄 입력한 이미지 : \(UserDefaults.standard.string(forKey: "profile"))")
@@ -194,7 +212,7 @@ class ProfileViewController: UIViewController{
             tabBarController.tabBar.tintColor = UIColor(red: 0.9373, green: 0.5373, blue: 0.2784, alpha: 1.0)
             tabBarController.tabBar.unselectedItemTintColor = .gray
             
-            let searchList = UserDefaults.standard.array(forKey: "searchList")!
+            let searchList = UserDefaults.standard.array(forKey: "searchList" ?? "0")
             let FindViewController = FindViewController()
             let find = UINavigationController(rootViewController: FindViewController)
             find.tabBarItem = UITabBarItem(title: "검색", image: UIImage(systemName: "magnifyingglass"), tag: 0)

@@ -62,7 +62,7 @@ class SettingViewController: UIViewController {
     
     @objc func mainButtonClicked() {
         print("프로필 수정 클릭")
-        let profile = UserDefaults.standard.string(forKey: "selectprofile")
+        let profile = UserDefaults.standard.string(forKey: "profile")
         UserDefaults.standard.setValue(profile, forKey: "profile")
         navigationController?.pushViewController(EditViewController(), animated: true)
     }
@@ -91,10 +91,11 @@ class SettingViewController: UIViewController {
             make.edges.equalTo(mainvView.safeAreaLayoutGuide)
         }
         
-//        let profile = UserDefaults.standard.string(forKey: "profileImage")
-        let profile = UserDefaults.standard.string(forKey: "selectprofile")
-//        profileImage.setImage(UIImage(named: profile!), for: .normal) profile_0
+
+        let profile = UserDefaults.standard.string(forKey: "profile")
+        print("세팅누를 때 프로필 : \(profile)")
         profileImage.setImage(UIImage(named: profile!), for: .normal)
+        //UserDefaults.standard.setValue(profile, forKey: "profile")
         profileImage.layer.masksToBounds = true
         profileImage.layer.cornerRadius = 40
         profileImage.layer.borderWidth = 5

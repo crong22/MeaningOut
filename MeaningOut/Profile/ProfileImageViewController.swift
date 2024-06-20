@@ -71,7 +71,6 @@ class ProfileImageViewController: UIViewController {
 
     func configuerLayOut(){
         let imageTest = UserDefaults.standard.string(forKey:"profileImage")
-        print("imageimage \(image!)")
         
         profileImage.image = UIImage(named: imageTest!)
 
@@ -122,7 +121,7 @@ extension ProfileImageViewController : UICollectionViewDelegate, UICollectionVie
             cell.profileImage.backgroundColor = UIColor(red: 0.9373, green: 0.5373, blue: 0.2784, alpha: 1.0)
             cell.profileImage.layer.borderWidth = 5
         }else {
-            cell.profileImage.backgroundColor = UIColor(white: 100, alpha: 0.5)
+            cell.profileImage.backgroundColor = UIColor(white: 0.1, alpha: 0.5)
             cell.profileImage.layer.borderWidth = 1
         }
         return cell
