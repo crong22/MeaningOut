@@ -143,7 +143,6 @@ class ProfileViewController: UIViewController{
 
     
     @objc func imageButtonClicked(){
-//        UserDefaults.standard.setValue(imageList[randomImage], forKey: "ranImage")
         navigationController?.pushViewController(ProfileImageViewController(), animated: true)
     }
     
@@ -161,7 +160,6 @@ class ProfileViewController: UIViewController{
         if nicknameTextField.text!.count > 1 && nicknameTextField.text!.count < 10 {
             for _char in nicknameTextField.text! {
                 for num in numList {
-//                    print("char: \(String(_char)), num \(String(num))")
                     if String(_char) == String(num) {
                         warningLabel.text = "닉네임에 숫자는 포함할 수 없어요"
                         return
@@ -183,27 +181,10 @@ class ProfileViewController: UIViewController{
                 UserDefaults.standard.setValue(selectedImage, forKey: "profile") // 바꾼 이미지 사용할 때
             }
 
-//            var image = UserDefaults.standard.string(forKey: "profileImage")
-//            UserDefaults.standard.setValue(image, forKey: "profile")
             
             print("가입할 떄 입력한 닉네임 : \(UserDefaults.standard.string(forKey: "nickName"))")
             print("가입할 떄 입력한 이미지 : \(UserDefaults.standard.string(forKey: "profile"))")
-            /*
-            let vc = FindViewController()
-            let nav = UINavigationController(rootViewController: vc)
-            nav.modalPresentationStyle = .fullScreen
-            present(nav, animated: true)
-            
-            // rootViewController를 사용하여 기존에 쌓인 뷰를 삭제하여 처음상태로 돌려준다.
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-            
-            let rootViewController = UINavigationController(rootViewController: FindViewController())
-            
-            sceneDelegate?.window?.rootViewController = rootViewController // storyboard에서 entrypoint
-            sceneDelegate?.window?.makeKeyAndVisible()     // show
-            */
+
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
             let sceneDelegate = windowScene?.delegate as? SceneDelegate
             

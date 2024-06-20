@@ -21,6 +21,10 @@ class FindViewController: UIViewController {
         view.backgroundColor = .white
         searchBar.delegate = self
         
+        // searchbar 수정제안 X
+        searchBar.autocorrectionType = .no
+        searchBar.spellCheckingType = .no
+        
         view.addSubview(searchBar)
         view.addSubview(imageView)
         view.addSubview(textLabel)

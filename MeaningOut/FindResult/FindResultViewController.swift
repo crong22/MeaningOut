@@ -53,6 +53,12 @@ class FindResultViewController: UIViewController {
         
         loadLikedItems()
         //
+        
+        findCollectionView.delegate = self
+        findCollectionView.dataSource = self
+        findCollectionView.isPrefetchingEnabled = true
+        findCollectionView.prefetchDataSource = self
+        findCollectionView.register(FindResultCollectionViewCell.self, forCellWithReuseIdentifier: FindResultCollectionViewCell.id)
     }
     
     deinit {
@@ -214,15 +220,17 @@ class FindResultViewController: UIViewController {
         mainView.addSubview(highPriceButton)
         mainView.addSubview(lowPriceButton)
         
-        findCollectionView.delegate = self
-        findCollectionView.dataSource = self
-        findCollectionView.isPrefetchingEnabled = true
-        findCollectionView.prefetchDataSource = self
-        findCollectionView.register(FindResultCollectionViewCell.self, forCellWithReuseIdentifier: FindResultCollectionViewCell.id)
         
     }
     
     func configureLayout(){
+        let totalCnt = list.total
+        // 검색결과 0이 나오는 조건의 경우
+        if totalCnt < 1 {
+            resultLabel.text = "검색결과 없습니다."
+            hiddenButton()
+        }
+        
         mainView.backgroundColor = .white
         mainView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(20)
@@ -230,6 +238,8 @@ class FindResultViewController: UIViewController {
             make.height.equalTo(90)
         }
         print(list.total)
+        
+
         resultLabel.font = .systemFont(ofSize: 15, weight: .black)
         resultLabel.textColor = UIColor(red: 0.9373, green: 0.5373, blue: 0.2784, alpha: 1.0)
         resultLabel.textAlignment = .left
@@ -239,6 +249,7 @@ class FindResultViewController: UIViewController {
             make.height.equalTo(30)
         }
         
+
         accuracyButton.backgroundColor = .white
         accuracyButton.layer.borderWidth = 1
         accuracyButton.setTitle("정확도", for: .normal)
@@ -363,7 +374,9 @@ class FindResultViewController: UIViewController {
                 self.findCollectionView.reloadData()
  
                 if page == 1 {
-                    findCollectionView.scrollToItem(at: IndexPath(row:0, section: 0), at: .top, animated: false)
+                    if self.list.total > 1 {
+                        findCollectionView.scrollToItem(at: IndexPath(row:0, section: 0), at: .top, animated: false)
+                    }
                 }
                 
                 case .failure(let error):
@@ -395,6 +408,13 @@ class FindResultViewController: UIViewController {
             likedItems = savedLikedItems
         }
     }
+    
+    func hiddenButton() {
+        accuracyButton.isHidden = true
+        dateButton.isHidden = true
+        highPriceButton.isHidden = true
+        lowPriceButton.isHidden = true
+    }
 }
 
 
@@ -404,8 +424,9 @@ extension FindResultViewController : UICollectionViewDelegate, UICollectionViewD
         print(list.items.count)
         return list.items.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print(#function)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FindResultCollectionViewCell.id, for: indexPath) as! FindResultCollectionViewCell
         let data = list.items[indexPath.item]
         let imageURL = URL(string: data.image)
@@ -415,8 +436,8 @@ extension FindResultViewController : UICollectionViewDelegate, UICollectionViewD
         titletext = titletext.replacingOccurrences(of: "<b>", with: " ")
         titletext = titletext.replacingOccurrences(of: "</b>", with: " ")
         
-        let title = data.title.replacingOccurrences(of: "<b>\(search!)</b>",with: "\(search!)", options: .regularExpression)
-
+        var title = data.title.replacingOccurrences(of: "<b>\(search!)</b>",with: "\(search!)", options: .regularExpression)
+        
         cell.titleLabel.text = titletext
         UserDefaults.standard.setValue(title, forKey: "title")
         
@@ -445,7 +466,7 @@ extension FindResultViewController : UICollectionViewDelegate, UICollectionViewD
         vc.indexPath = indexPath
         vc.isLiked = data.like
         
-        //혹시나하는마음에 추가적으로 전달 ..
+        //추가적으로 전달 ..
         let islike2 = UserDefaults.standard.bool(forKey: "isLiked2") 
 //        if islike2 {
 //            UserDefaults.standard.setValue(islike2, forKey: "islike")
