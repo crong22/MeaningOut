@@ -33,12 +33,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             tabBarController.tabBar.tintColor = UIColor(red: 0.9373, green: 0.5373, blue: 0.2784, alpha: 1.0)
             tabBarController.tabBar.unselectedItemTintColor = .gray
             
-            if searchList == nil {
-                let searchList = [""]
-            }else {
-                let searchList = UserDefaults.standard.array(forKey: "searchList")
-            }
-
+            //가입 후, 앱 재실행 시 런타임 오류 수정
+            var searchList = UserDefaults.standard.array(forKey: "searchList") ?? []
+            
+            print("SceneDelegate searchList : \(searchList)")
+            
             if searchList.count < 1 {
                 let FindViewController = FindViewController()
                 let find = UINavigationController(rootViewController: FindViewController)
