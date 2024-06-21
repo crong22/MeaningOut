@@ -37,7 +37,10 @@ class SettingViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         
+        // 이미지를 클릭하거나 [>]버튼 누를 때도 프로필편집화면
         mainButton.addTarget(self, action: #selector(mainButtonClicked), for: .touchUpInside)
+        profileImage.addTarget(self, action: #selector(mainButtonClicked), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(mainButtonClicked), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,24 +71,19 @@ class SettingViewController: UIViewController {
     }
     
     func configureHierarchy() {
-        view.addSubview(mainvView)
         view.addSubview(tableView)
         view.addSubview(mainTitle)
+        view.addSubview(mainvView)
         
         mainvView.addSubview(mainButton)
         mainvView.addSubview(profileImage)
         mainvView.addSubview(nickname)
         mainvView.addSubview(joindate)
         mainvView.addSubview(nextButton)
+        
     }
     
     func configureLayout() {
-
-        mainvView.backgroundColor = .white
-        mainvView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(140)
-        }
         
         mainButton.snp.makeConstraints { make in
             make.edges.equalTo(mainvView.safeAreaLayoutGuide)
@@ -119,6 +117,7 @@ class SettingViewController: UIViewController {
             make.height.equalTo(30)
         }
         
+        
         var join = UserDefaults.standard.string(forKey: "joindate")
         join = join!.replacingOccurrences(of: "-",with: ". ", options: .regularExpression)
         joindate.text = "\(join!) 가입"
@@ -138,6 +137,12 @@ class SettingViewController: UIViewController {
             make.top.equalTo(mainvView.safeAreaLayoutGuide).inset(37)
             make.trailing.equalTo(mainvView.safeAreaLayoutGuide).inset(15)
             make.height.width.equalTo(40)
+        }
+        
+        mainvView.backgroundColor = .white
+        mainvView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(140)
         }
         
         tableView.snp.makeConstraints { make in
@@ -171,12 +176,14 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
             cell.likeLabel.attributedText = attributedStr
             
         }
-//        print(textList[indexPath.row])
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
+        
+        //회원탈퇴
         if indexPath.row ==  4 {
             print("세팅에서 선택한 셀 \(textList[indexPath.row])")
             UserDefaults.standard.setValue(false, forKey: "isUser")

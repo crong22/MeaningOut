@@ -36,7 +36,7 @@
 		D82A45C42C1F5A9E00C25D26 /* FindListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82A45C32C1F5A9E00C25D26 /* FindListViewController.swift */; };
 		D82A45C62C1F606300C25D26 /* FindListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82A45C52C1F606300C25D26 /* FindListTableViewCell.swift */; };
 		D82A45F42C205D2900C25D26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D82A45F32C205D2900C25D26 /* LaunchScreen.storyboard */; };
-		D89ED5142C2480F300ACE555 /* testdddd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89ED5132C2480F300ACE555 /* testdddd.swift */; };
+		D89ED5162C2521F100ACE555 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89ED5152C2521F100ACE555 /* test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,7 +68,7 @@
 		D82A45C32C1F5A9E00C25D26 /* FindListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindListViewController.swift; sourceTree = "<group>"; };
 		D82A45C52C1F606300C25D26 /* FindListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindListTableViewCell.swift; sourceTree = "<group>"; };
 		D82A45F32C205D2900C25D26 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		D89ED5132C2480F300ACE555 /* testdddd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testdddd.swift; sourceTree = "<group>"; };
+		D89ED5152C2521F100ACE555 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +122,7 @@
 				D82A45852C1B4A9F00C25D26 /* Info.plist */,
 				D82A45AB2C1CE62900C25D26 /* APIKey.swift */,
 				D82A45AD2C1CE68000C25D26 /* Naver.swift */,
-				D89ED5132C2480F300ACE555 /* testdddd.swift */,
+				D89ED5152C2521F100ACE555 /* test.swift */,
 			);
 			path = MeaningOut;
 			sourceTree = "<group>";
@@ -289,6 +289,7 @@
 				D82A45B92C1EB1F000C25D26 /* SettingViewController.swift in Sources */,
 				D82A45A12C1B7B8300C25D26 /* ProfileImageCollectionViewCell.swift in Sources */,
 				D82A45C62C1F606300C25D26 /* FindListTableViewCell.swift in Sources */,
+				D89ED5162C2521F100ACE555 /* test.swift in Sources */,
 				D82A45AE2C1CE68000C25D26 /* Naver.swift in Sources */,
 				D82A45782C1B4A9E00C25D26 /* AppDelegate.swift in Sources */,
 				D82A45C02C1F52B700C25D26 /* EditProfileViewController.swift in Sources */,
@@ -302,7 +303,6 @@
 				D82A459A2C1B621900C25D26 /* ProfileViewController.swift in Sources */,
 				D82A457A2C1B4A9E00C25D26 /* SceneDelegate.swift in Sources */,
 				D82A45B62C1EAA7100C25D26 /* DetailViewController.swift in Sources */,
-				D89ED5142C2480F300ACE555 /* testdddd.swift in Sources */,
 				D82A45AC2C1CE62900C25D26 /* APIKey.swift in Sources */,
 				D82A45952C1B58E500C25D26 /* MainViewController.swift in Sources */,
 			);

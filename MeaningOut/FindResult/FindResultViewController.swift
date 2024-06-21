@@ -23,7 +23,6 @@ class FindResultViewController: UIViewController {
     var isEnd = false
     var list = Naver(total: 0, start: 0, display: 0, items: [])
     var likedItems: [String: Bool] = [:]
-
     var itemList = UserDefaults.standard.array(forKey: "searchList")
     
     override func viewDidLoad() {
