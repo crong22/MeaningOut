@@ -46,6 +46,8 @@ class SettingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.title = "SETTING"
+        let islike = UserDefaults.standard.integer(forKey: "isLiked")
+
         if let selectedImage = UserDefaults.standard.string(forKey: "profileImage") {
             setImage(selectedImage)
         }
@@ -186,22 +188,32 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
         //회원탈퇴
         if indexPath.row ==  4 {
             print("세팅에서 선택한 셀 \(textList[indexPath.row])")
-            UserDefaults.standard.setValue(false, forKey: "isUser")
-            UserDefaults.standard.setValue(nil, forKey: "afternickname")
-            isUser = false
-            let vc = MainViewController()
-            let nav = UINavigationController(rootViewController: vc)
-            nav.modalPresentationStyle = .fullScreen
-            present(nav, animated: true)
+            let alertController = UIAlertController(title: "회원탈퇴", message: "탈퇴하면 모든 데이터가 초기화 됩니다. \n 탈퇴하시겠습니까?", preferredStyle: .alert)
+            let confirmAction = UIAlertAction(title: "확인", style: .destructive) { _ in
+                UserDefaults.standard.setValue(false, forKey: "isUser")
+                UserDefaults.standard.setValue(nil, forKey: "afternickname")
+                self.isUser = false
+                
+                let vc = MainViewController()
+                let nav = UINavigationController(rootViewController: vc)
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true)
+                
+                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                   let sceneDelegate = windowScene.delegate as? SceneDelegate {
+                    let rootViewController = UINavigationController(rootViewController: MainViewController())
+                    sceneDelegate.window?.rootViewController = rootViewController
+                    sceneDelegate.window?.makeKeyAndVisible()
+                }
+            }
             
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
+            alertController.addAction(confirmAction)
+            alertController.addAction(cancelAction)
             
-            let rootViewController = UINavigationController(rootViewController: MainViewController())
-            
-            sceneDelegate?.window?.rootViewController = rootViewController // storyboard에서 entrypoint
-            sceneDelegate?.window?.makeKeyAndVisible()     // show
+            present(alertController, animated: true, completion: nil)
+
         }
     }
 }

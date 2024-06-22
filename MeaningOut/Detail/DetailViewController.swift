@@ -25,9 +25,9 @@ class DetailViewController: UIViewController {
         view.backgroundColor = .white
 
         // 초기 isLiked 값을 UserDefaults에서 불러오기
-        isLiked = UserDefaults.standard.bool(forKey: "islike")
+        isLiked = UserDefaults.standard.bool(forKey: "isLiked")
         
-        print("isLikedisLikedisLikedisLiked \(isLiked)")
+        print("DetailViewController isLiked \(isLiked)")
         
         // 좋아요 버튼 설정
         let likeButtonImage = isLiked ? "like_selected" : "like_unselected"
@@ -52,27 +52,17 @@ class DetailViewController: UIViewController {
         view.addSubview(webView)
         configureLayout()
     }
-    
-//    @objc func toggleLike() {
-//        isLiked.toggle()
-//        print("isLiked \(isLiked)")
-////        UserDefaults.standard.setValue(isLiked, forKey: "isLiked")
-//        if let indexPath = indexPath {
-//            print("1111111111113131311313")
-//            UserDefaults.standard.set(isLiked, forKey: "isLiked_\(indexPath.row)")
-//            print("toggleLike detail")
-//            NotificationCenter.default.post(name: NSNotification.Name("likeButtonTapped"), object: nil, userInfo: ["indexPath": indexPath, "isLiked": isLiked])
-//        
-//        }
-//    }
-    
+
     @objc func toggleLike() {
         isLiked.toggle()
-        UserDefaults.standard.set(isLiked, forKey: "isLiked2")
+        let isLiked2 = UserDefaults.standard.set(isLiked, forKey: "isLiked")
+        print(isLiked)
+        UserDefaults.standard.setValue(isLiked, forKey: "isLiked")
         if let indexPath = indexPath {
             UserDefaults.standard.set(isLiked, forKey: "isLiked_\(indexPath.row)")
+            NotificationCenter.default.post(name: NSNotification.Name("likeButtonTapped"), object: nil, userInfo: ["indexPath": indexPath, "isLiked": isLiked])
         }
-
+        
     }
     
     func updateLikeButton() {
@@ -82,7 +72,6 @@ class DetailViewController: UIViewController {
     }
     
     func configureLayout() {
-        
         webView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }

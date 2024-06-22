@@ -87,7 +87,7 @@ class FindResultCollectionViewCell: UICollectionViewCell {
             make.width.height.equalTo(30)
         }
         
-        likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+        likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         
     }
     
@@ -110,13 +110,19 @@ class FindResultCollectionViewCell: UICollectionViewCell {
         likeButton.setImage(UIImage(named: imageName), for: .normal)
     }
     
-    @objc func likeButtonClicked() {
+//    @objc func likeButtonClicked() {
+//        isLiked.toggle()
+//        item?.like = isLiked
+//        updateLikeButtonImage()
+//        if let indexPath = indexPath, let item = item {
+//            delegate?.didTapLikeButton(at: indexPath, item: item)
+//        }
+//    }
+  
+    @objc func likeButtonTapped() {
         isLiked.toggle()
-        item?.like = isLiked
-        updateLikeButtonImage()
-        if let indexPath = indexPath, let item = item {
-            delegate?.didTapLikeButton(at: indexPath, item: item)
-        }
+        // Notify the view controller about the like button tap
+        NotificationCenter.default.post(name: NSNotification.Name("likeButtonTapped"), object: nil, userInfo: ["indexPath": indexPath, "isLiked": isLiked])
     }
-    
+
 }

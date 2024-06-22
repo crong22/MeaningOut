@@ -71,13 +71,14 @@ class FindViewController: UIViewController {
 
 extension FindViewController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        navigationController?.pushViewController(FindResultViewController(), animated: true)
         searchList.removeAll()
         searchList.append(searchBar.text!)
         UserDefaults.standard.setValue(searchBar.text!, forKey: "search")
         UserDefaults.standard.setValue(searchList, forKey: "searchList")
+       
+
         print("검색리스트 : \(searchList)")
-        
+        navigationController?.pushViewController(FindResultViewController(), animated: true)
         print(#function)
         page = 1
         

@@ -17,7 +17,7 @@ class FindResultViewController: UIViewController {
     let dateButton = UIButton()
     let highPriceButton = UIButton()
     let lowPriceButton = UIButton()
-    let search = UserDefaults.standard.string(forKey: "search")
+    var search = UserDefaults.standard.string(forKey: "search")
     var page = 1
     var isLoading = false
     var isEnd = false
@@ -29,13 +29,12 @@ class FindResultViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-        let itemsearch = UserDefaults.standard.string(forKey: "search")
-        navigationItem.title = "\(itemsearch!)"
+        navigationItem.title = "\(search!)"
         navigationController?.navigationBar.tintColor = .black
         let backBarButtonItem = UIBarButtonItem(image:UIImage(systemName: "chevron.backward") , style: .plain, target: self, action: #selector(backButtonClicked))
         navigationItem.leftBarButtonItem = backBarButtonItem
-        print("검색하는 품목 : \(itemsearch!)")
-        callRequest(query: itemsearch!, sort : "sim")
+        print("검색하는 품목 : \(search!)")
+        callRequest(query: search!, sort : "sim")
         configureHierarchy()
         configureLayout()
         
@@ -68,8 +67,8 @@ class FindResultViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // UserDefaults에서 좋아요 상태 가져오기
-        let isLiked2 = UserDefaults.standard.bool(forKey: "isLiked")
-        print("라이크 \(isLiked2)")
+        let isLiked = UserDefaults.standard.bool(forKey: "isLiked")
+        print("라이크 \(isLiked)")
         
         // 컬렉션 뷰 데이터 다시 로드
         findCollectionView.reloadData()
@@ -89,7 +88,6 @@ class FindResultViewController: UIViewController {
 
             self.navigationController?.popViewController(animated: true)
 
-            
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
             let sceneDelegate = windowScene?.delegate as? SceneDelegate
             
@@ -108,7 +106,7 @@ class FindResultViewController: UIViewController {
             
             tabBarController.setViewControllers([find, setting], animated: true)
 
-            sceneDelegate?.window?.rootViewController = tabBarController // storyboard에서 entrypoint
+            sceneDelegate?.window?.rootViewController = tabBarController
         }else {
 
             self.navigationController?.popViewController(animated: true)
@@ -131,8 +129,7 @@ class FindResultViewController: UIViewController {
             
             tabBarController.setViewControllers([find, setting], animated: true)
 
-            sceneDelegate?.window?.rootViewController = tabBarController // storyboard에서 entrypoint
-            
+            sceneDelegate?.window?.rootViewController = tabBarController
         }
         
     }
@@ -453,7 +450,7 @@ extension FindResultViewController : UICollectionViewDelegate, UICollectionViewD
         cell.delegate = self
 
         let isLiked2 = UserDefaults.standard.bool(forKey: "isLiked")
-
+        print("isliked2 \(isLiked2)")
         return cell
     }
     
@@ -466,13 +463,10 @@ extension FindResultViewController : UICollectionViewDelegate, UICollectionViewD
         vc.isLiked = data.like
         
         //추가적으로 전달 ..
-        let islike2 = UserDefaults.standard.bool(forKey: "isLiked2") 
-//        if islike2 {
-//            UserDefaults.standard.setValue(islike2, forKey: "islike")
-//        }else{
-            UserDefaults.standard.setValue(vc.isLiked, forKey: "islike")
-//        }
-//        UserDefaults.standard.setValue(vc.isLiked, forKey: "islike")
+        let islike2 = UserDefaults.standard.bool(forKey: "isLiked2")
+        
+        UserDefaults.standard.setValue(vc.isLiked, forKey: "islike")
+        
         UserDefaults.standard.setValue(data.link, forKey: "link")
         print("전달하는 값 : \(UserDefaults.standard.bool(forKey: "islike"))")
         navigationController?.pushViewController(DetailViewController(), animated: true)

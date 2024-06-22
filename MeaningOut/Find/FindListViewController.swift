@@ -23,7 +23,6 @@ class FindListViewController: UIViewController {
         super.viewDidLoad()
         
         
-        print(itemList!)
         view.backgroundColor = .white
         searchBar.delegate = self
         
@@ -146,10 +145,11 @@ class FindListViewController: UIViewController {
 
 extension FindListViewController : UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
+        print("searchBarSearchButtonClicked 검색")
+        UserDefaults.standard.setValue(searchBar.text!, forKey: "search")
+        print("검색하려는 것 : \(UserDefaults.standard.string(forKey: "search"))")
         navigationController?.pushViewController(FindResultViewController(), animated: true)
         itemList?.insert(searchBar.text!, at: 0)
-        UserDefaults.standard.setValue(searchBar.text!, forKey: "search")
         UserDefaults.standard.setValue(itemList, forKey: "searchList")
         tableView.reloadData()
     }
