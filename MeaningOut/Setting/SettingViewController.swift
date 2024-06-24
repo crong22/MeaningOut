@@ -187,32 +187,19 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
         
         //회원탈퇴
         if indexPath.row ==  4 {
-            print("세팅에서 선택한 셀 \(textList[indexPath.row])")
-            let alertController = UIAlertController(title: "회원탈퇴", message: "탈퇴하면 모든 데이터가 초기화 됩니다. \n 탈퇴하시겠습니까?", preferredStyle: .alert)
-            let confirmAction = UIAlertAction(title: "확인", style: .destructive) { _ in
+            // Alert 변경
+            settingAlert(title: "회원탈퇴", message: "탈퇴하면 모든 데이터가 초기화 됩니다.") {
+                print("회원탈퇴O")
+                self.isUser = false
                 UserDefaults.standard.setValue(false, forKey: "isUser")
                 UserDefaults.standard.setValue(nil, forKey: "afternickname")
-                self.isUser = false
                 
                 let vc = MainViewController()
                 let nav = UINavigationController(rootViewController: vc)
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true)
                 
-                if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                   let sceneDelegate = windowScene.delegate as? SceneDelegate {
-                    let rootViewController = UINavigationController(rootViewController: MainViewController())
-                    sceneDelegate.window?.rootViewController = rootViewController
-                    sceneDelegate.window?.makeKeyAndVisible()
-                }
             }
-            
-            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-            
-            alertController.addAction(confirmAction)
-            alertController.addAction(cancelAction)
-            
-            present(alertController, animated: true, completion: nil)
 
         }
     }
